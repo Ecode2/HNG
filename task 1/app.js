@@ -2,7 +2,6 @@ import express from "express";
 import axios from "axios";
 
 const router = express.Router();
-export default router;
 
 let STATUS;
 // STATUS = "developement";
@@ -33,11 +32,13 @@ router.get("/api/hello", async (req, res) => {
         }});
     }
 
-    let to_rtn = {
+    let rtn = {
         "client_ip": ip,
         "location": city,
         "greeting": `Hello, ${visitor_name}!, the temperature is ${temp} degrees Celsius in ${city}.`
     };
     
-    res.json(to_rtn);
+    res.json(rtn);
 });
+
+export default router;
