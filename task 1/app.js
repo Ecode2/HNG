@@ -12,7 +12,7 @@ router.get("/api/hello", async (req, res) => {
     let visitor_name = req.query['visitor_name'];
     // remove double quotes from string
     // req.ip
-    let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;;
+    let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;;
     STATUS === "developement" && (ip =  "105.113.19.250");
 
     if (visitor_name === undefined || visitor_name === '')
@@ -22,15 +22,16 @@ router.get("/api/hello", async (req, res) => {
     const city = geoResponse.data.city;
     const lon = geoResponse.data.longitude;
     const lat = geoResponse.data.latitude;
+    let temp;
     try {
         const data = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=09898c34a283cbd79e96c1a42fe0fee2&units=metric`);
+        temp = data.data.main.temp;
     } catch(e) {
         res.json({"msg": "An error occured while fetching weather data", "more info": {
             "ip": ip,
             "georesponse": geoResponse.data,
         }});
     }
-    const temp = data.data.main.temp;
 
     let to_rtn = {
         "client_ip": ip,
