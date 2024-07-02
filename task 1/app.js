@@ -11,7 +11,8 @@ STATUS = "production";
 router.get("/api/hello", async (req, res) => {
     let visitor_name = req.query['visitor_name'];
     // remove double quotes from string
-    let ip = req.ip;
+    // req.ip
+    let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;;
     STATUS === "developement" && (ip =  "105.113.19.250");
 
     if (visitor_name === undefined || visitor_name === '')
@@ -27,7 +28,6 @@ router.get("/api/hello", async (req, res) => {
         res.json({"msg": "An error occured while fetching weather data", "more info": {
             "ip": ip,
             "georesponse": geoResponse.data,
-            "req": req,
         }});
     }
     const temp = data.data.main.temp;
