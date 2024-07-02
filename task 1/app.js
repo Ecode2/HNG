@@ -27,6 +27,7 @@ router.get("/api/hello", async (req, res) => {
         res.json({"msg": "An error occured while fetching weather data", "more info": {
             "ip": ip,
             "georesponse": geoResponse.data,
+            "req": req,
         }});
     }
     const temp = data.data.main.temp;
