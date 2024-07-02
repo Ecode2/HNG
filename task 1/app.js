@@ -24,7 +24,10 @@ router.get("/api/hello", async (req, res) => {
     try {
         const data = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=09898c34a283cbd79e96c1a42fe0fee2&units=metric`);
     } catch(e) {
-        res.json({"msg": "An error occured while fetching weather data"});
+        res.json({"msg": "An error occured while fetching weather data", "more info": {
+            "ip": ip,
+            "georesponse": geoResponse.data,
+        }});
     }
     const temp = data.data.main.temp;
 
