@@ -1,11 +1,14 @@
 import express from "express";
 import axios from "axios";
 
-const app = express();
+const router = express.Router();
+export default router;
 
-const STATUS = "developement";
+let STATUS;
+// STATUS = "developement";
+STATUS = "production";
 
-app.get("/api/hello", async (req, res) => {
+router.get("/api/hello", async (req, res) => {
     let visitor_name = req.query['visitor_name'];
     // remove double quotes from string
     let ip = req.ip;
@@ -29,5 +32,3 @@ app.get("/api/hello", async (req, res) => {
     
     res.json(to_rtn);
 });
-
-app.listen(3000, () => console.log("Server running on https://localhost:3000"));
